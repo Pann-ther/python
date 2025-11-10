@@ -1,5 +1,6 @@
 import psycopg2 as c
 
+# Parametre de connexion au serveur psql
 config={
     "host" : "192.168.1.36",
     "user" : "panther",
@@ -42,6 +43,7 @@ def test_connection():
         
 
 def insert_data(connection,table,mu,pu,dips,squat):
+    # Creation d'un curseur
     cursor = connection.cursor()
     cursor.execute(
         f"INSERT INTO {table} (mu, pu, dips, squat) VALUES (%s,%s,%s,%s)",
@@ -54,6 +56,7 @@ def insert_data(connection,table,mu,pu,dips,squat):
 
     
 def select_data(connection,table):
+    # Creation d'un curseur
     cursor=connection.cursor()
     cursor.execute(f"SELECT * FROM {table}")
     users=cursor.fetchall()
@@ -64,6 +67,7 @@ def select_data(connection,table):
     cursor.close()
 
 if __name__ == "__main__":
+    # Si le test de connexion est valide, on execute les commandes pour admin la BDD
     if test_connection() == True:
         connection = c.connect(**config)
         valeurs_test={
